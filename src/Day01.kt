@@ -10,11 +10,11 @@ fun main() {
     // Part 2
     val digits = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
     input.sumOf { line ->
-        line.mapIndexedNotNull { charIndex, char -> // Not null ignores any non-digits
+        line.mapIndexedNotNull { charIndex, char -> // ignore nulls
             if (char.isDigit()) char.digitToInt() // extract numeric digit
 
-            else digits // extract text digit
-                .firstOrNull { digit -> line.startsWith(digit, charIndex) } // check digits starting at the current char
+            else digits // extract text digit starting at the current char index
+                .firstOrNull { digit -> line.startsWith(digit, charIndex) } // returns null if none found
                 ?.let { digit -> digits.indexOf(digit) + 1 } // text digit index + 1 gets numeric digit
         }
         .joinToString("").concatFirstAndLastCharsToInt()
