@@ -41,6 +41,5 @@ fun main() {
             }
         }
     }
-
     idToNumCardsMap.values.sum().println() // sum the count of each card
 }
