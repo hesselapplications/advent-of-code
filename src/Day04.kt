@@ -6,7 +6,6 @@ data class ScratchCard(
     val cardNumbers: Set<Int>,
 ) {
     fun numMatches() = winningNumbers.intersect(cardNumbers).size
-
 }
 fun String.extractUniqueNumbers() = Regex("""\d+""").findAll(this).map { it.value.toInt() }.toSet()
 
