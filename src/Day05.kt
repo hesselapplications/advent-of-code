@@ -46,10 +46,9 @@ fun String.extractLongs() = Regex("""\d+""").findAll(this).map { it.value.toLong
 fun main() {
     val input = readInput("Day05")
     val parts = input.joinToString("\n").split("\n\n")
-    val seeds = parts.first().extractLongs()
+
     val almanacMaps = parts.drop(1).map { parseAlmanacMap(it) }.associateBy { it.sourceCategory }
 
-    // Part 1
     fun findSeedLocation(seed: Long): Long {
         // start with the seed and seed map
         var source = seed
@@ -68,7 +67,24 @@ fun main() {
         return source
     }
 
-    seeds.minOf { findSeedLocation(it) }.println() // closest location
+    // Part 1
+    parts.first().extractLongs()
+        .minOf { findSeedLocation(it) }
+        .println()
 
     // Part 2
+    var minLocation = Long.MAX_VALUE
+    parts.first().extractLongs()
+        .chunked(2)
+        .forEach { (seedRangeStart, seedRangeLength) ->
+            val seedRange = seedRangeStart.rangeUntil(seedRangeStart + seedRangeLength)
+            seedRange.forEach { seed ->
+                val location = findSeedLocation(seed)
+                if (location < minLocation) {
+                    minLocation = location
+                }
+            }
+        }
+
+    minLocation.println()
 }
