@@ -1,28 +1,28 @@
-data class Match(
-    val value: String,
-    val rowIndex: Int,
-    val colBeginIndex: Int,
-    val colEndIndex: Int,
-)
-
-fun MatchResult.toMatch(rowIndex: Int) = Match(
-    value = value,
-    rowIndex = rowIndex,
-    colBeginIndex = range.first,
-    colEndIndex = range.last,
-)
-
-fun findMatches(regex: Regex, input: List<String>) = input.flatMapIndexed { rowIndex, line ->
-    regex.findAll(line).map { it.toMatch(rowIndex) }
-}
-
-fun Match.isAdjacentTo(otherMatch: Match) =
-    rowIndex in (otherMatch.rowIndex - 1)..(otherMatch.rowIndex + 1) && (
-        colBeginIndex in (otherMatch.colBeginIndex - 1) .. (otherMatch.colEndIndex + 1)
-        || colEndIndex in (otherMatch.colBeginIndex - 1) .. (otherMatch.colEndIndex + 1)
+fun main() {
+    data class Match(
+        val value: String,
+        val rowIndex: Int,
+        val colBeginIndex: Int,
+        val colEndIndex: Int,
     )
 
-fun main() {
+    fun MatchResult.toMatch(rowIndex: Int) = Match(
+        value = value,
+        rowIndex = rowIndex,
+        colBeginIndex = range.first,
+        colEndIndex = range.last,
+    )
+
+    fun findMatches(regex: Regex, input: List<String>) = input.flatMapIndexed { rowIndex, line ->
+        regex.findAll(line).map { it.toMatch(rowIndex) }
+    }
+
+    fun Match.isAdjacentTo(otherMatch: Match) =
+        rowIndex in (otherMatch.rowIndex - 1)..(otherMatch.rowIndex + 1) && (
+                colBeginIndex in (otherMatch.colBeginIndex - 1) .. (otherMatch.colEndIndex + 1)
+                        || colEndIndex in (otherMatch.colBeginIndex - 1) .. (otherMatch.colEndIndex + 1)
+                )
+
     val input = readInput("Day03")
     val numbers = findMatches(Regex("""\d+"""), input)
     val symbols = findMatches(Regex("""[^\d.]"""), input)

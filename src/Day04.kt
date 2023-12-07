@@ -1,24 +1,24 @@
 import kotlin.math.pow
 
-data class ScratchCard(
-    val id: Int,
-    val winningNumbers: Set<Int>,
-    val cardNumbers: Set<Int>,
-) {
-    fun numMatches() = winningNumbers.intersect(cardNumbers).size
-}
-fun String.extractUniqueNumbers() = Regex("""\d+""").findAll(this).map { it.value.toInt() }.toSet()
-
-fun parseScratchCards(lines: List<String>) = lines.map { line ->
-    val parts = line.split(":", "|")
-    ScratchCard(
-        id = parts[0].extractUniqueNumbers().first(),
-        winningNumbers = parts[1].extractUniqueNumbers(),
-        cardNumbers = parts[2].extractUniqueNumbers(),
-    )
-}
-
 fun main() {
+    data class ScratchCard(
+        val id: Int,
+        val winningNumbers: Set<Int>,
+        val cardNumbers: Set<Int>,
+    ) {
+        fun numMatches() = winningNumbers.intersect(cardNumbers).size
+    }
+    fun String.extractUniqueNumbers() = Regex("""\d+""").findAll(this).map { it.value.toInt() }.toSet()
+
+    fun parseScratchCards(lines: List<String>) = lines.map { line ->
+        val parts = line.split(":", "|")
+        ScratchCard(
+            id = parts[0].extractUniqueNumbers().first(),
+            winningNumbers = parts[1].extractUniqueNumbers(),
+            cardNumbers = parts[2].extractUniqueNumbers(),
+        )
+    }
+
     val input = readInput("Day04")
     val scratchCards = parseScratchCards(input)
 

@@ -1,49 +1,50 @@
-data class AlmanacMap(
-    val sourceCategory: String,
-    val destinationCategory: String,
-    val ranges: List<MapRange>,
-) {
-    fun findDestination(source: Long): Long {
-        // Find the first range that contains a destination mapping, if none return the source
-        return ranges.firstNotNullOfOrNull { it.findDestination(source) } ?: source
-    }
-}
-
-data class MapRange(
-    val destinationStartInclusive: Long,
-    val destinationEndInclusive: Long,
-    val sourceStartInclusive: Long,
-    val sourceEndInclusive: Long,
-) {
-    fun findDestination(source: Long): Long? {
-        if (source < sourceStartInclusive || source > sourceEndInclusive) return null // outside the range
-        val offset = source - sourceStartInclusive // find position of the source in the source range
-        return destinationStartInclusive + offset // apply that offset to the destination range
-    }
-}
-
-fun parseAlmanacMap(mapText: String): AlmanacMap {
-    val parts = mapText.split("\n")
-    return AlmanacMap(
-        sourceCategory = parts.first().substringBefore("-"),
-        destinationCategory = parts.first().substringAfterLast("-").replace(" map:", ""),
-        ranges = parts.drop(1).map { parseMapRange(it) }
-    )
-}
-
-fun parseMapRange(rangeText: String): MapRange {
-    val (destinationRangeStart, sourceRangeStart, rangeLength) = rangeText.extractLongs()
-    return MapRange(
-        destinationStartInclusive = destinationRangeStart,
-        destinationEndInclusive = destinationRangeStart + rangeLength - 1,
-        sourceStartInclusive = sourceRangeStart,
-        sourceEndInclusive = sourceRangeStart + rangeLength - 1,
-    )
-}
-
-fun String.extractLongs() = Regex("""\d+""").findAll(this).map { it.value.toLong() }.toList()
-
 fun main() {
+
+    data class MapRange(
+        val destinationStartInclusive: Long,
+        val destinationEndInclusive: Long,
+        val sourceStartInclusive: Long,
+        val sourceEndInclusive: Long,
+    ) {
+        fun findDestination(source: Long): Long? {
+            if (source < sourceStartInclusive || source > sourceEndInclusive) return null // outside the range
+            val offset = source - sourceStartInclusive // find position of the source in the source range
+            return destinationStartInclusive + offset // apply that offset to the destination range
+        }
+    }
+
+    data class AlmanacMap(
+        val sourceCategory: String,
+        val destinationCategory: String,
+        val ranges: List<MapRange>,
+    ) {
+        fun findDestination(source: Long): Long {
+            // Find the first range that contains a destination mapping, if none return the source
+            return ranges.firstNotNullOfOrNull { it.findDestination(source) } ?: source
+        }
+    }
+
+    fun String.extractLongs() = Regex("""\d+""").findAll(this).map { it.value.toLong() }.toList()
+
+    fun parseMapRange(rangeText: String): MapRange {
+        val (destinationRangeStart, sourceRangeStart, rangeLength) = rangeText.extractLongs()
+        return MapRange(
+            destinationStartInclusive = destinationRangeStart,
+            destinationEndInclusive = destinationRangeStart + rangeLength - 1,
+            sourceStartInclusive = sourceRangeStart,
+            sourceEndInclusive = sourceRangeStart + rangeLength - 1,
+        )
+    }
+
+    fun parseAlmanacMap(mapText: String): AlmanacMap {
+        val parts = mapText.split("\n")
+        return AlmanacMap(
+            sourceCategory = parts.first().substringBefore("-"),
+            destinationCategory = parts.first().substringAfterLast("-").replace(" map:", ""),
+            ranges = parts.drop(1).map { parseMapRange(it) }
+        )
+    }
+
     val input = readInput("Day05")
     val parts = input.joinToString("\n").split("\n\n")
 
