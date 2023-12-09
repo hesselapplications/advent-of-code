@@ -8,20 +8,20 @@ fun main() {
             do {
                 add(numbers)
                 numbers = numbers.zipWithNext { a, b -> b - a } // differences
-            } while (last().any { it != 0 }) // break if we have all zeros
+            } while (last().any { it != 0 }) // break out if bottom layer of the funnel is all zeros
         }
     }
 
     fun predictNext(funnel: List<List<Int>>): Int {
         return funnel
-            .map { it.last() } // get the rightmost values in the funnel
+            .map { it.last() } // get the rightmost edge of values in the funnel
             .reversed() // start at the bottom zero
             .fold(0) { currentPrediction, next -> currentPrediction + next } // build up predication
     }
 
     fun predictPrevious(funnel: List<List<Int>>): Int {
         return funnel
-            .map { it.first() } // get the leftmost values in the funnel
+            .map { it.first() } // get the leftmost edge of values in the funnel
             .reversed() // start at the bottom zero
             .fold(0) { currentPrediction, next -> next - currentPrediction } // build up predication
     }
