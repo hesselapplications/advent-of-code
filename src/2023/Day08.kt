@@ -1,5 +1,5 @@
 fun main() {
-    val input = readInput("Day08").joinToString("\n")
+    val input = readInput("2023/Day08").joinToString("\n")
 
     val parts = input.split("\n\n")
     val directions = parts[0].toList()

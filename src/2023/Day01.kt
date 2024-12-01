@@ -1,6 +1,6 @@
 fun main() {
     fun String.concatFirstAndLastCharsToInt() = "${first()}${last()}".toInt()
-    val input = readInput("Day01")
+    val input = readInput("2023/Day01")
 
     // Part 1
     input.sumOf { line ->

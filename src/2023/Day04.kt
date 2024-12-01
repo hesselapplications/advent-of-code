@@ -19,7 +19,7 @@ fun main() {
         )
     }
 
-    val input = readInput("Day04")
+    val input = readInput("2023/Day04")
     val scratchCards = parseScratchCards(input)
 
     // Part 1

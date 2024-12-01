@@ -57,7 +57,7 @@ val flows = mapOf(
 )
 
 fun main() {
-    val input = readInput("Day10")
+    val input = readInput("2023/Day10")
 
     val tiles = input.flatMapIndexed { rowIndex, line ->
         line.mapIndexed { colIndex, char ->

@@ -23,7 +23,7 @@ fun main() {
                         || colEndIndex in (otherMatch.colBeginIndex - 1) .. (otherMatch.colEndIndex + 1)
                 )
 
-    val input = readInput("Day03")
+    val input = readInput("2023/Day03")
     val numbers = findMatches(Regex("""\d+"""), input)
     val symbols = findMatches(Regex("""[^\d.]"""), input)
 

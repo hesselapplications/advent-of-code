@@ -1,7 +1,7 @@
 import kotlin.math.absoluteValue
 
 fun main() {
-    val input = readInput("Day11")
+    val input = readInput("2023/Day11")
 
     data class Galaxy(
         var row: Long,

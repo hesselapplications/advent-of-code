@@ -45,7 +45,7 @@ fun main() {
         )
     }
 
-    val input = readInput("Day05")
+    val input = readInput("2023/Day05")
     val parts = input.joinToString("\n").split("\n\n")
 
     val almanacMaps = parts.drop(1).map { parseAlmanacMap(it) }.associateBy { it.sourceCategory }

@@ -26,7 +26,7 @@ fun main() {
             .fold(0) { currentPrediction, next -> next - currentPrediction } // build up predication
     }
 
-    val input = readInput("Day09")
+    val input = readInput("2023/Day09")
     val funnels = input.map { parseFunnel(it) }
 
     // Part 1

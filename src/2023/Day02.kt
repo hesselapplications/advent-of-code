@@ -33,7 +33,7 @@ fun main() {
         )
     }
 
-    val input = readInput("Day02")
+    val input = readInput("2023/Day02")
     val games = input.map { parseGame(it) }
 
     // Part 1

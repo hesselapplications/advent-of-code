@@ -1,7 +1,7 @@
 fun main() {
     fun String.extractLongs() = Regex("""\d+""").findAll(this).map { it.value.toLong() }.toList()
 
-    val input = readInput("Day06")
+    val input = readInput("2023/Day06")
     val times = input.first().extractLongs()
     val recordDistances = input.last().extractLongs()
 
