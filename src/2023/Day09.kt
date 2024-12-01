@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 fun main() {
 
     fun parseFunnel(line: String): List<List<Int>> {

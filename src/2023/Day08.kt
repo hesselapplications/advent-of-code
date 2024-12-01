@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 fun main() {
     val input = readInput("2023/Day08").joinToString("\n")
 

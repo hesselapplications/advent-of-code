@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 fun main() {
     fun String.extractLongs() = Regex("""\d+""").findAll(this).map { it.value.toLong() }.toList()
 

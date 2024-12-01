@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 fun main() {
     fun String.concatFirstAndLastCharsToInt() = "${first()}${last()}".toInt()
     val input = readInput("2023/Day01")

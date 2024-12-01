@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 class Day07 {
 
     companion object {

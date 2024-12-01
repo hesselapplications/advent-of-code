@@ -1,3 +1,8 @@
+package `2023`
+
+import println
+import readInput
+
 enum class Direction {
     NORTH, SOUTH, EAST, WEST;
 }
