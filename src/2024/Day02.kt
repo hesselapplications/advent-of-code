@@ -28,5 +28,4 @@ fun main() {
             levels.toMutableList().apply { removeAt(index) }.isSafe() // Remove one level
         }
     }.println()
-
 }
