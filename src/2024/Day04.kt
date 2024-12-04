@@ -1,42 +1,14 @@
 package `2024`
 
+import Direction
+import Point
 import println
 import readInput
-
-private enum class Direction {
-    N, S, E, W, NE, NW, SE, SW
-}
-
-private data class Point(
-    val x: Int,
-    val y: Int,
-) {
-
-    fun neighbor(
-        direction: Direction,
-        distance: Int = 1,
-    ) = when (direction) {
-        Direction.N -> Point(x, y - distance)
-        Direction.S -> Point(x, y + distance)
-        Direction.E -> Point(x + distance, y)
-        Direction.W -> Point(x - distance, y)
-        Direction.NE -> Point(x + distance, y - distance)
-        Direction.NW -> Point(x - distance, y - distance)
-        Direction.SE -> Point(x + distance, y + distance)
-        Direction.SW -> Point(x - distance, y + distance)
-    }
-
-}
+import toGrid
 
 fun main() {
     val input = readInput("2024/Day04")
-
-    val grid = mutableMapOf<Point, Char>()
-    input.forEachIndexed { y, line ->
-        line.forEachIndexed { x, c ->
-            grid[Point(x, y)] = c
-        }
-    }
+    val grid = input.toGrid()
 
     // Part 1
     fun Point.nextThreeLetters(direction: Direction) = buildString {
