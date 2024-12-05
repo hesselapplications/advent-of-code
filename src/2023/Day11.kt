@@ -1,11 +1,7 @@
-package `2023`
-
-import println
-import readInput
 import kotlin.math.absoluteValue
 
 fun main() {
-    val input = readInput("2023/Day11")
+    val input = readInput("Day11")
 
     data class Galaxy(
         var row: Long,

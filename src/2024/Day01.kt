@@ -1,7 +1,3 @@
-package `2024`
-
-import println
-import readInput
 import kotlin.math.abs
 
 fun main() {

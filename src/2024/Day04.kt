@@ -1,11 +1,3 @@
-package `2024`
-
-import Direction
-import Point
-import println
-import readInput
-import toGrid
-
 fun main() {
     val input = readInput("2024/Day04")
     val grid = input.toGrid()

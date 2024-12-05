@@ -1,8 +1,3 @@
-package `2023`
-
-import println
-import readInput
-
 class Day07 {
 
     companion object {
@@ -111,7 +106,7 @@ class Day07 {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val input = readInput("2023/Day07")
+            val input = readInput("Day07")
 
             // Part 1
             calculateWinnings(input.map { parseHand(it, false) }).println()

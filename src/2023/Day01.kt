@@ -1,11 +1,6 @@
-package `2023`
-
-import println
-import readInput
-
 fun main() {
     fun String.concatFirstAndLastCharsToInt() = "${first()}${last()}".toInt()
-    val input = readInput("2023/Day01")
+    val input = readInput("Day01")
 
     // Part 1
     input.sumOf { line ->

@@ -1,8 +1,3 @@
-package `2023`
-
-import println
-import readInput
-
 fun main() {
 
     data class Cubes(
@@ -38,7 +33,7 @@ fun main() {
         )
     }
 
-    val input = readInput("2023/Day02")
+    val input = readInput("Day02")
     val games = input.map { parseGame(it) }
 
     // Part 1

@@ -1,10 +1,5 @@
-package `2023`
-
-import println
-import readInput
-
 fun main() {
-    val input = readInput("2023/Day08").joinToString("\n")
+    val input = readInput("Day08").joinToString("\n")
 
     val parts = input.split("\n\n")
     val directions = parts[0].toList()

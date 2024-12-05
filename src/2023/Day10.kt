@@ -1,12 +1,3 @@
-package `2023`
-
-import println
-import readInput
-
-enum class Direction {
-    NORTH, SOUTH, EAST, WEST;
-}
-
 data class Tile(
     val char: Char,
     val rowIndex: Int,
@@ -22,10 +13,11 @@ data class TileMap(
     fun getNeighbor(tile: Tile, direction: Direction): Tile {
         with(tile) {
             val coordinates = when (direction) {
-                Direction.NORTH -> Pair(rowIndex - 1, colIndex)
-                Direction.SOUTH -> Pair(rowIndex + 1, colIndex)
-                Direction.EAST -> Pair(rowIndex, colIndex + 1)
-                Direction.WEST -> Pair(rowIndex, colIndex - 1)
+                Direction.N -> Pair(rowIndex - 1, colIndex)
+                Direction.S -> Pair(rowIndex + 1, colIndex)
+                Direction.E -> Pair(rowIndex, colIndex + 1)
+                Direction.W -> Pair(rowIndex, colIndex - 1)
+                else -> throw IllegalArgumentException("Invalid direction")
             }
             return tileMap[coordinates]!!
         }
@@ -36,33 +28,33 @@ data class TileMap(
 // Map of both ways each pipe can flow
 val flows = mapOf(
     '|' to mapOf(
-        Direction.NORTH to Direction.NORTH,
-        Direction.SOUTH to Direction.SOUTH,
+        Direction.N to Direction.N,
+        Direction.S to Direction.S,
     ),
     '-' to mapOf(
-        Direction.EAST to Direction.EAST,
-        Direction.WEST to Direction.WEST,
+        Direction.E to Direction.E,
+        Direction.W to Direction.W,
     ),
     'L' to mapOf(
-        Direction.SOUTH to Direction.EAST,
-        Direction.WEST to Direction.NORTH,
+        Direction.S to Direction.E,
+        Direction.W to Direction.N,
     ),
     'J' to mapOf(
-        Direction.EAST to Direction.NORTH,
-        Direction.SOUTH to Direction.WEST,
+        Direction.E to Direction.N,
+        Direction.S to Direction.W,
     ),
     '7' to mapOf(
-        Direction.EAST to Direction.SOUTH,
-        Direction.NORTH to Direction.WEST,
+        Direction.E to Direction.S,
+        Direction.N to Direction.W,
     ),
     'F' to mapOf(
-        Direction.NORTH to Direction.EAST,
-        Direction.WEST to Direction.SOUTH,
+        Direction.N to Direction.E,
+        Direction.W to Direction.S,
     ),
 )
 
 fun main() {
-    val input = readInput("2023/Day10")
+    val input = readInput("Day10")
 
     val tiles = input.flatMapIndexed { rowIndex, line ->
         line.mapIndexed { colIndex, char ->
@@ -79,7 +71,7 @@ fun main() {
     // Part 1
     val tileLoop = mutableListOf<Tile>()
     var currentTile = tiles.first { it.char == 'S' } // start at the starting tile of course
-    var currentDirection = Direction.EAST // small cheat from looking at the input file
+    var currentDirection = Direction.E // small cheat from looking at the input file
     var returnedToStart = false
 
     while (!returnedToStart) {

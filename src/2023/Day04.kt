@@ -1,7 +1,3 @@
-package `2023`
-
-import println
-import readInput
 import kotlin.math.pow
 
 fun main() {
@@ -23,7 +19,7 @@ fun main() {
         )
     }
 
-    val input = readInput("2023/Day04")
+    val input = readInput("Day04")
     val scratchCards = parseScratchCards(input)
 
     // Part 1

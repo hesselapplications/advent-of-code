@@ -1,8 +1,3 @@
-package `2023`
-
-import println
-import readInput
-
 fun main() {
 
     fun parseFunnel(line: String): List<List<Int>> {
@@ -31,7 +26,7 @@ fun main() {
             .fold(0) { currentPrediction, next -> next - currentPrediction } // build up predication
     }
 
-    val input = readInput("2023/Day09")
+    val input = readInput("Day09")
     val funnels = input.map { parseFunnel(it) }
 
     // Part 1

@@ -9,7 +9,7 @@ repositories {
 tasks {
     sourceSets {
         main {
-            java.srcDirs("src")
+            java.srcDirs("src/utils", "src/2023", "src/2024")
         }
     }
 
