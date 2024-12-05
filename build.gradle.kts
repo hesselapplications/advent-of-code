@@ -8,8 +8,11 @@ repositories {
 
 tasks {
     sourceSets {
-        main {
-            java.srcDirs("src/utils", "src/2023", "src/2024")
+        create("2023") {
+            java.srcDir("src/2023")
+        }
+        create("2024") {
+            java.srcDir("src/2024")
         }
     }
 

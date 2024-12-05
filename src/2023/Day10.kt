@@ -4,6 +4,10 @@ data class Tile(
     val colIndex: Int,
 )
 
+enum class Direction {
+    N, S, E, W, NE, NW, SE, SW
+}
+
 data class TileMap(
     private val tiles: List<Tile>
 ) {
