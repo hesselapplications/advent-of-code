@@ -33,15 +33,20 @@ data class Point(
         direction: Direction,
         distance: Int = 1,
     ) = when (direction) {
-        Direction.N -> Point(x, y - distance)
-        Direction.S -> Point(x, y + distance)
-        Direction.E -> Point(x + distance, y)
-        Direction.W -> Point(x - distance, y)
-        Direction.NE -> Point(x + distance, y - distance)
-        Direction.NW -> Point(x - distance, y - distance)
-        Direction.SE -> Point(x + distance, y + distance)
-        Direction.SW -> Point(x - distance, y + distance)
+        Direction.N -> neighbor(y = -distance)
+        Direction.S -> neighbor(y = distance)
+        Direction.E -> neighbor(x = distance)
+        Direction.W -> neighbor(x = -distance)
+        Direction.NE -> neighbor(x = distance, y = -distance)
+        Direction.NW -> neighbor(x = -distance, y = -distance)
+        Direction.SE -> neighbor(x = distance, y = distance)
+        Direction.SW -> neighbor(x = -distance, y = distance)
     }
+
+    fun neighbor(
+        x: Int = 0,
+        y: Int = 0,
+    ) = Point(this.x + x, this.y + y)
 
 }
 
@@ -55,3 +60,20 @@ fun List<String>.toGrid(): Grid {
         }
     }
 }
+
+fun Grid.prettyPrint() {
+    val grid = this
+    val xs = grid.keys.map { it.x }
+    val ys = grid.keys.map { it.y }
+
+    buildString {
+        for (y in ys.minOrNull()!!..ys.maxOrNull()!!) {
+            for (x in xs.minOrNull()!!..xs.maxOrNull()!!) {
+                append(grid[Point(x, y)] ?: ' ')
+            }
+            appendLine()
+        }
+    }.println()
+}
+
+fun Grid.isWithinBounds(point: Point) = point in keys
