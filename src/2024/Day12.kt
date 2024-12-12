@@ -23,44 +23,38 @@ fun main() {
     regions.sumOf { region ->
         region.size * region.sumOf { plot ->
             directions.count {
-                grid[plot.neighbor(it)] != grid[plot]
+                grid[plot.neighbor(it)] != grid[plot] // Count plots with different neighboring plants
             }
         }
     }.println()
 
     // Part 2
-    fun numEdges(
-        region: Set<Point>,
-        direction: Direction,
-        groupByAxis: (Point) -> Int,
-        sortAxis: (Point) -> Int,
-    ): Int {
-        // Find points on the edge of the region in the given direction
-        val points = region.filter { it.neighbor(direction) !in region }
-
-        // Group them by row or column, so we can inspect them in order
-        val grouped = points.groupBy(groupByAxis).values
-
-        // Sort the numbers along each row or column
-        val sorted = grouped.map { numbers ->
-            numbers.map(sortAxis).sorted()
-        }
-
-        // Count the number of continuously increasing segments in each row or column
-        val numContinuousSegments = sorted.map {
-            it.zipWithNext().count { (a, b) -> a + 1 != b } + 1
-        }
-
-        // Count the number of continuous segments in each row or column
-        return numContinuousSegments.sum()
+    fun List<Int>.numContinuousSegments(): Int {
+        val numGaps = sorted().zipWithNext().count { (a, b) -> a + 1 != b } // Count breaks in the sequence
+        return numGaps + 1 // If there are n gaps, there are n+1 segments
     }
 
     regions.sumOf { region ->
         region.size * listOf(
-            numEdges(region, Direction.N, { it.y }, { it.x }),
-            numEdges(region, Direction.S, { it.y }, { it.x }),
-            numEdges(region, Direction.E, { it.x }, { it.y }),
-            numEdges(region, Direction.W, { it.x }, { it.y }),
+            region
+                .filter { it.neighbor(Direction.N) !in region } // Top edges
+                .groupBy(Point::y, Point::x).values // Group by row, map to x coordinates
+                .sumOf { it.numContinuousSegments() }, // Count continuous segments in each row
+
+            region
+                .filter { it.neighbor(Direction.S) !in region } // Bottom edges
+                .groupBy(Point::y, Point::x).values // Group by row, map to x coordinates
+                .sumOf { it.numContinuousSegments() }, // Count continuous segments in each row
+
+            region
+                .filter { it.neighbor(Direction.W) !in region } // Left edges
+                .groupBy(Point::x, Point::y).values // Group by column, map to y coordinates
+                .sumOf { it.numContinuousSegments() }, // Count continuous segments in each column
+
+            region
+                .filter { it.neighbor(Direction.E) !in region } // Right edges
+                .groupBy(Point::x, Point::y).values // Group by column, map to y coordinates
+                .sumOf { it.numContinuousSegments() }, // Count continuous segments in each column
         ).sum()
     }.println()
 }
