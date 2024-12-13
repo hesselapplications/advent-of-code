@@ -1,38 +1,26 @@
-import kotlin.io.path.Path
-import kotlin.io.path.readLines
+import java.io.File
 
 fun main() {
-    val input = Path("src/2024/Day05.txt").readLines()
+    // Read the input file, split it into rules and pages
+    val (rules, pages) = File("5").readText().split("\n\n")
 
-    val rules = input.filter { "|" in it }.map { it.split("|") }
-    val updates = input.filter { "," in it }.map { it.split(",") }
+    // Keep track of the sum of the middle number for both part 1 and part 2
+    val answers = mutableListOf(0,0)
 
-    fun List<String>.before(nbr: String) = rules
-        .filter {
-            it[1] == nbr // Second part of the rule is the number we are looking for
-            && it[0] in this // First part of the rule is in the update list
-            && it[1] in this // Second part of the rule is in the update list
-        }
-        .map { it[0] } // First part of the rule contains the numbers that precede the number we are looking for
+    // Split the pages into individual pages and process them
+    pages.lines().forEach { page ->
 
-    fun Collection<List<String>>.middleSum() = println(
-        sumOf {
-            it[it.size / 2].toInt() // Sum up the middle number of the update list
-        }
-    )
+        // Split the page into individual numbers
+        val pageNumbers = page.split(",")
 
-    // Part 1
-    val correctUpdates = updates.filter { update ->
-        update.all { nbr ->
-            val actualBefore = update.takeWhile { it != nbr }.toSet() // Take all numbers before the current number
-            val expectedBefore = update.before(nbr).toSet() // Take all numbers that should be before the current number
-            actualBefore == expectedBefore // Ensure the rule is satisfied
-        }
-    }.also { it.middleSum() }
+        // Sort the page numbers based on the rules
+        val sortedPageNumbers = pageNumbers.sortedWith { x, y -> if ("$x|$y" in rules) -1 else 1 }
 
-    // Part 2
-    (updates - correctUpdates).map {
-        // Sort the numbers by the count of numbers that should be before them
-        it.sortedBy { nbr -> it.before(nbr).size }
-    }.middleSum()
+        // If the page numbers are correctly ordered, add the middle number to part 1 answer, else add to part 2 answer
+        val correctlyOrdered = pageNumbers == sortedPageNumbers
+        val part = if (correctlyOrdered) 0 else 1
+        answers[part] += sortedPageNumbers[sortedPageNumbers.size / 2].toInt()
+    }
+
+    println(answers)
 }
