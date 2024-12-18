@@ -36,7 +36,7 @@ fun main() {
     }
 
     // Find the shortest path length from start to end and print it
-    gridPart1.shortestFallingBytesPath().println()
+    (gridPart1.shortestFallingBytesPath()!!.size - 1).println()
 
     // Part 2
     val gridPart2 = grid.toMutableMap()
@@ -46,7 +46,7 @@ fun main() {
         gridPart2[point] = '#'
 
         // Check if the path is still reachable
-        if (gridPart2.shortestFallingBytesPath() != null) {
+        if (gridPart2.shortestFallingBytesPath() == null) {
             // If not, print the point and break
             "${point.x},${point.y}".println()
             return
