@@ -20,37 +20,12 @@ fun main() {
         }
     }
 
-    // Finds the shortest path from start to end, using BFS
-    fun shortestPath(
-        grid: Grid,
-    ): Int {
-        val directions = listOf(Direction.N, Direction.S, Direction.E, Direction.W)
-        val visited = mutableSetOf<Point>()
-        val queue = ArrayDeque<Pair<Point, Int>>() // Pair of point and current distance
-        queue.add(start to 0)
-
-        // Explore the grid
-        while (queue.isNotEmpty()) {
-            val (current, distance) = queue.removeFirst()
-
-            // Return the distance if the end is reached
-            if (current == end) return distance
-
-            // Otherwise, explore the neighbors
-            if (current !in visited) {
-                visited.add(current)
-                directions.forEach { direction ->
-                    val neighbor = current.neighbor(direction)
-                    if (grid[neighbor] == '.' && neighbor !in visited) {
-                        queue.add(neighbor to distance + 1)
-                    }
-                }
-            }
-        }
-
-        // No path found
-        return -1
-    }
+    // Define the shortest path function
+    fun Grid.shortestFallingBytesPath() = shortestPath(
+        start = start,
+        end = end,
+        isValidNextStep = { point -> this[point] == '.' },
+    )
 
     // Part 1
     val gridPart1 = grid.toMutableMap()
@@ -61,7 +36,7 @@ fun main() {
     }
 
     // Find the shortest path length from start to end and print it
-    shortestPath(gridPart1).println()
+    gridPart1.shortestFallingBytesPath().println()
 
     // Part 2
     val gridPart2 = grid.toMutableMap()
@@ -71,7 +46,7 @@ fun main() {
         gridPart2[point] = '#'
 
         // Check if the path is still reachable
-        if (shortestPath(gridPart2) == -1) {
+        if (gridPart2.shortestFallingBytesPath() != null) {
             // If not, print the point and break
             "${point.x},${point.y}".println()
             return

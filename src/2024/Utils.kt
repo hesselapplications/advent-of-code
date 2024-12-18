@@ -80,3 +80,37 @@ fun Grid.prettyPrint() {
 }
 
 fun Grid.isWithinBounds(point: Point) = point in keys
+
+// Finds the shortest path from start to end, using BFS
+fun shortestPath(
+    start: Point,
+    end: Point,
+    isValidNextStep: (Point) -> Boolean,
+    directions: List<Direction> = listOf(Direction.N, Direction.S, Direction.E, Direction.W),
+): List<Point>? {
+    val visited = mutableSetOf<Point>()
+    val queue = ArrayDeque<Pair<Point, List<Point>>>() // Pair of point and current path
+    queue.add(start to listOf(start))
+
+    // Explore the grid
+    while (queue.isNotEmpty()) {
+        val (current, path) = queue.removeFirst()
+
+        // Return the path if the end is reached
+        if (current == end) return path
+
+        // Otherwise, explore the neighbors
+        if (current !in visited) {
+            visited.add(current)
+            directions.forEach { direction ->
+                val neighbor = current.neighbor(direction)
+                if (isValidNextStep(neighbor) && neighbor !in visited) {
+                    queue.add(neighbor to path + neighbor)
+                }
+            }
+        }
+    }
+
+    // No path found
+    return null
+}
