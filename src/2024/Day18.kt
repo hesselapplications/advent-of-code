@@ -35,8 +35,9 @@ fun main() {
         gridPart1[point] = '#'
     }
 
-    // Find the shortest path length from start to end and print it
-    (gridPart1.shortestFallingBytesPath()!!.size - 1).println()
+    // Find the shortest path, and print the number of steps
+    val numSteps = gridPart1.shortestFallingBytesPath()!!.size - 1 // Steps are between points, not on points
+    numSteps.println()
 
     // Part 2
     val gridPart2 = grid.toMutableMap()
