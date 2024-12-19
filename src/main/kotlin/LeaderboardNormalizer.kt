@@ -76,20 +76,28 @@ fun main() {
     // Chunk the results by the number of members
     // The sorting ensures each chunk will then contain each members time for that particular level, in order of fastest to slowest
     results.chunked(members.size).forEach { chunk ->
-        chunk.forEachIndexed { index, result ->
+        val completed = chunk.filter { it.completedAt != null }
+        if (completed.isNotEmpty()) println("\nDay ${chunk.first().day} Part ${chunk.first().level}:")
+
+        completed.forEachIndexed { index, result ->
             // For N members, the first member to get each star gets N points, the second gets N-1, and the last gets 1.
-            result.pointsEarned = if (result.completedAt != null) {
-                members.size - index
-            } else {
-                0
+            result.pointsEarned = members.size - index
+
+            val finishOrder = when (index) {
+                0 -> "1st"
+                1 -> "2nd"
+                2 -> "3rd"
+                else -> "${index + 1}th"
             }
+            println("$finishOrder - ${result.member}")
         }
     }
 
     // Calculate the total points for each member, and print the results
+    println("\nTotal Points:")
     results
         .groupBy { it.member }
         .mapValues { (_, memberResults) -> memberResults.sumOf { it.pointsEarned } }
         .entries.sortedByDescending { it.value }
-        .forEach { (member, totalPoints) -> println("$member: $totalPoints") }
+        .forEach { (member, totalPoints) -> println("$totalPoints - $member") }
 }
