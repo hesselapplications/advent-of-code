@@ -1,5 +1,6 @@
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.*
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
@@ -25,6 +26,14 @@ enum class Direction {
         SW -> NE
     }
 
+}
+
+fun Char.toDirection() = when (this) {
+    '^' -> Direction.N
+    'v' -> Direction.S
+    '>' -> Direction.E
+    '<' -> Direction.W
+    else -> error("Invalid direction: $this")
 }
 
 data class Point(
@@ -113,4 +122,9 @@ fun shortestPath(
 
     // No path found
     return null
+}
+
+fun <T> List<T>.permutations(): List<List<T>> {
+    return if (this.size == 1) listOf(this)
+    else this.flatMap { i -> (this - i).permutations().map { listOf(i) + it } }
 }
