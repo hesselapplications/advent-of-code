@@ -128,3 +128,20 @@ fun <T> List<T>.permutations(): List<List<T>> {
     return if (this.size == 1) listOf(this)
     else this.flatMap { i -> (this - i).permutations().map { listOf(i) + it } }
 }
+
+fun <T> List<T>.combinations(
+    size: Int = this.size,
+): List<List<T>> {
+    if (size <= 0) return listOf(emptyList())
+    if (size > this.size) return emptyList()
+    if (size == this.size) return listOf(this)
+    if (size == 1) return this.map { listOf(it) }
+
+    val combinations = mutableListOf<List<T>>()
+    val rest = this.drop(1)
+    rest.combinations(size - 1).forEach { combination ->
+        combinations.add(listOf(this[0]) + combination)
+    }
+    combinations += rest.combinations(size)
+    return combinations
+}
