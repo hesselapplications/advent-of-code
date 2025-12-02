@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "2.2.21"
 }
 
 repositories {
@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.1")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
 }
 
@@ -21,9 +21,13 @@ tasks {
             java.srcDir("src/2024")
             compileClasspath += sourceSets.main.get().runtimeClasspath
         }
+        create("2025") {
+            java.srcDir("src/2025")
+            compileClasspath += sourceSets.main.get().runtimeClasspath
+        }
     }
 
     wrapper {
-        gradleVersion = "8.4"
+        gradleVersion = "9.2.1"
     }
 }
